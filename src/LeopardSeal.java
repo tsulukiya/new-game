@@ -2,7 +2,7 @@ import java.awt.*;
 import java.io.File;
 
 public class LeopardSeal extends Animal {
-    static String filename = "/Users/macbook/IdeaProjectsJDBC/newGame/src/leopard.png";
+    static String filename = "src/leopard.png";
 
     public LeopardSeal(int x, int y) {
         super(x, y);
@@ -11,17 +11,20 @@ public class LeopardSeal extends Animal {
     }
 
     public boolean canEat(Animal animal) {
-        return animal.eatenBy(this);
+        if (animal != null) {
+            return animal.eatenBy(this);
+        }
+        return false;
     }
 
     @Override
     protected boolean eatenBy(Penguin penguin) {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean eatenBy(PlayerPenguin playerPenguin) {
-        return false;
+        return true;
     }
 
     @Override

@@ -110,6 +110,7 @@ public class Maze {
     }
 
     private static void update() {
+        frame.revalidate();
         frame.repaint();
     }
 

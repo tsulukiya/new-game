@@ -2,7 +2,7 @@ import java.awt.Toolkit;
 import java.io.File;
 
 public class Whale extends Animal {
-    static String filename = "/Users/macbook/IdeaProjectsJDBC/newGame/src/whale.png";
+    static String filename = "src/whale.png";
 
     public Whale(int x, int y) {
         super(x, y);
@@ -11,17 +11,20 @@ public class Whale extends Animal {
     }
 
     public boolean canEat(Animal animal) {
-        return animal.eatenBy(this);
+        if (animal != null) {
+            return animal.eatenBy(this);
+        }
+        return false;
     }
 
     @Override
     protected boolean eatenBy(Penguin penguin) {
-        return true;
+        return false;
     }
 
     @Override
     protected boolean eatenBy(PlayerPenguin playerPenguin) {
-        return true;
+        return false;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class Whale extends Animal {
 
     @Override
     protected boolean eatenBy(LeopardSeal leopardSeal) {
-        return true;
+        return false;
     }
 
     @Override

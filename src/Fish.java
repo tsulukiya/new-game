@@ -2,7 +2,7 @@ import java.awt.Toolkit;
 import java.io.File;
 
 public class Fish extends Animal {
-    static String filename = "/Users/macbook/IdeaProjectsJDBC/newGame/src/fish.png";
+    static String filename = "src/fish.png";
 
     public Fish(int x, int y) {
         super(x, y);
@@ -11,32 +11,40 @@ public class Fish extends Animal {
         image = Toolkit.getDefaultToolkit().getImage(f.getAbsolutePath());
     }
 
+    @Override
+    protected Step[] getStepsSequence() {
+        return new Step[]{Step.UP, Step.RIGHT, Step.DOWN, Step.LEFT};
+    }
+
     public boolean canEat(Animal animal) {
-        return animal.eatenBy(this);
+        if (animal != null) {
+            return animal.eatenBy(this);
+        }
+        return false;
     }
 
     @Override
     protected boolean eatenBy(Penguin penguin) {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean eatenBy(PlayerPenguin playerPenguin) {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean eatenBy(Whale whale) {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean eatenBy(LeopardSeal leopardSeal) {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean eatenBy(Fish fish) {
-        return false;
+        return true;
     }
 }

@@ -11,13 +11,9 @@ public class Antarktis extends Maze {
         width = 41;
         height = 41;
         antarktis = generateMaze(width, height);
+        Animal.setAntarktis(antarktis);
+        setupMaze();
         gameLoop();
-
-
-
-
-
-
 
 // Close the opened frame
         closeFrame();
@@ -27,17 +23,35 @@ public class Antarktis extends Maze {
     private static void gameLoop() {
         while (true) {
 // TODO maybe
-            draw();
+            if(currentEvent != NOTHING) {
+                if(playerPenguin.move(currentEvent, lostPenguin)) {
+                    moveAll();
+                } else {
+                    draw = false;
+                }
 
-// TODO maybe
-            currentEvent = NOTHING;
+                currentEvent = NOTHING;
+            }
+            draw();
 // TODO maybe
         }
     }
 
-//    private static void moveAll() {
-//// TODO
-//    }
+    private static void moveAll() {
+        for(Whale whale: whales) {
+            whale.move();
+        }
+
+        for(LeopardSeal leopardSeal: leopardSeals) {
+            leopardSeal.move();
+        }
+
+        lostPenguin.move();
+
+        for(Fish fish: fishes) {
+            fish.move();
+        }
+    }
 
     /**
      * Example Setup for easier Testing during development
@@ -50,6 +64,7 @@ public class Antarktis extends Maze {
             pos = getRandomEmptyField();
             whales[i] = new Whale(pos[0], pos[1]);
             antarktis[pos[0]][pos[1]] = whales[i];
+
         }
         for (int i = 0; i < leopardSeals.length; i++) {
             pos = getRandomEmptyField();

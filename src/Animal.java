@@ -9,6 +9,11 @@ import java.io.File;
 
 
 public abstract class Animal {
+
+    protected static final int X = 0;
+    protected static final int Y = 1;
+    public static final int DEFAULT_INVALID_POINT = -2;
+
     protected int x, y;
     static String filename;
     protected File f;
@@ -21,8 +26,97 @@ public abstract class Animal {
     }
 
     public void move() {
-// TODO
+        boolean isMovedToEat = false;
+        int firstWithoutPredatorX = DEFAULT_INVALID_POINT;
+        int firstWithoutPredatorY = DEFAULT_INVALID_POINT;
 
+        for (Step step : getStepsSequence()) {
+
+            int[] pos = getPosByStep(step);
+
+            int dx = pos[X];
+            int dy = pos[Y];
+
+            if (!isPredator(dx, dy)) {
+
+                if (firstWithoutPredatorX == DEFAULT_INVALID_POINT
+                        && firstWithoutPredatorY == DEFAULT_INVALID_POINT) {
+                    firstWithoutPredatorX = dx;
+                    firstWithoutPredatorY = dy;
+                }
+
+                if (canEat(antarktis[dx][dy])) {
+                    antarktis[x][y] = null;
+                    x = dx;
+                    y = dy;
+                    antarktis[x][y] = this;
+                    isMovedToEat = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isMovedToEat
+            && firstWithoutPredatorX != DEFAULT_INVALID_POINT
+                && firstWithoutPredatorY != DEFAULT_INVALID_POINT) {
+            antarktis[x][y] = null;
+            x = firstWithoutPredatorX;
+            y = firstWithoutPredatorY;
+            antarktis[x][y] = this;
+        }
+    }
+
+    protected boolean isPredator(int x, int y) {
+        boolean isPredator = false;
+        for (Step step : getStepsSequence()) {
+            int[] predatorPos = getPosByStep(step);
+            Animal predator = antarktis[predatorPos[X]][predatorPos[Y]];
+            if (predator != null
+                    && predator.canEat(this)) {
+                isPredator = true;
+                break;
+            }
+        }
+        return isPredator;
+    }
+
+    protected int[] getPosByStep(Step step) {
+        int dx = x;
+        int dy = y;
+
+        switch (step) {
+            case UP:
+                dy = dy - 1;
+                break;
+            case DOWN:
+                dy = dy + 1;
+                break;
+            case RIGHT:
+                dx = dx + 1;
+                break;
+            case LEFT:
+                dx = dx - 1;
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported step: " + step.name());
+        }
+
+        if(dx < 0) {
+            dx = antarktis.length - 1;
+        } else if (dx >= antarktis.length) {
+            dx = 0;
+        }
+
+        if(dy < 0) {
+            dy = antarktis[x].length - 1;
+        } else if (dy >= antarktis[x].length) {
+            dy = 0;
+        }
+        return new int[]{dx, dy};
+    }
+
+    protected Step[] getStepsSequence() {
+        return new Step[]{Step.LEFT, Step.DOWN, Step.RIGHT, Step.UP};
     }
 
     public abstract boolean canEat(Animal animal);
