@@ -25,7 +25,7 @@ public class Antarktis extends Maze {
 
 
     private static void gameLoop() {
-        while () {
+        while (true) {
 // TODO maybe
             draw();
 

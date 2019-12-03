@@ -2,7 +2,7 @@ import java.awt.Toolkit;
 import java.io.File;
 
 public class Penguin extends Animal {
-    static String filename = "tux.png";
+    static String filename = "/Users/macbook/IdeaProjectsJDBC/newGame/src/tux.png";
 
     public Penguin(int x, int y) {
         super(x, y);
@@ -36,6 +36,6 @@ public class Penguin extends Animal {
 
     @Override
     protected boolean eatenBy(Fish fish) {
-        return false;
+        return true;
     }
 }

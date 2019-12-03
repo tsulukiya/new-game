@@ -36,7 +36,7 @@ public class LeopardSeal extends Animal {
 
     @Override
     protected boolean eatenBy(Fish fish) {
-        return false;
+        return true;
     }
 
 

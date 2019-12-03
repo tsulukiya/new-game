@@ -22,6 +22,7 @@ public abstract class Animal {
 
     public void move() {
 // TODO
+
     }
 
     public abstract boolean canEat(Animal animal);
